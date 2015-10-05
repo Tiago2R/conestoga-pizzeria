@@ -2,18 +2,17 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
 		<div class="container">
-			<div class="logo">
+			<div class="text-center">
 				<img src="imgs/logo.png" alt="Conestoga Pizzeria logo">
 			</div>
-		</div>
-		<div>
 			<form>
 				<div class="row">
-					<div class="col-sm-6">
-						<p>Personal Details</p>
+					<div class="col-sm-6 form-block">
+						<h1>Personal Details</h1>
 						<div class="form-group">
 							<label for="inputName">Name</label>
 							<input type="text" class="form-control" id="inputName" placeholder="Name">
@@ -43,8 +42,8 @@
 							<input type="text" class="form-control" id="inputEmailAddress" placeholder="Email Address">
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<p>Order Information</p>
+					<div class="col-sm-6 form-block">
+						<h1>Order Information</h1>
 						<div class="form-group">
 							<label for="inputToppings">Size</label>
 							<input type="text" class="form-control" id="inputSize" placeholder="Size">
@@ -59,8 +58,10 @@
 						</div>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
+				<div class="text-center">
+					<button type="submit" class="btn btn-default">Place Order</button>
+				</div>
 			</form>
-		</div>		
+		</div>
 	</body>
 </html>
