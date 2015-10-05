@@ -10,3 +10,17 @@ body {
 .form-block {
 	margin-bottom: 40px;
 }
+
+.radio-inline {
+  height: 1em;
+}
+
+.size {
+	margin-top: 2px;
+	min-height: 34px;
+} 
+
+.toppings {
+	margin-top: 2px;
+	min-height: 72px;
+}
