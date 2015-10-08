@@ -3,35 +3,36 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/style.css">
-		<script language="javascript" type="text/javascript" src="js/script.js"></script>
+		<script language="javascript" type="text/javascript" src="js/calculateOrder.js"></script>
+		<script language="javascript" type="text/javascript" src="js/validation.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<div class="text-center">
 				<img src="imgs/logo.png" alt="Conestoga Pizzeria logo">
 			</div>
-			<form id="orderForm">
+			<form id="orderForm" onsubmit="return validateForm()">
 				<div class="row">
 					<div class="col-sm-6 form-block">
 						<h1>Personal Details</h1>
-						<div class="form-group">
+						<div id="divName" class="form-group">
 							<label for="inputName">Name</label>
 							<input type="text" class="form-control" id="inputName" placeholder="Name">
 						</div>
-						<div class="form-group">
+						<div id="divAddress" class="form-group">
 							<label for="inputAddress">Address</label>
 							<input type="text" class="form-control" id="inputAddress" placeholder="Address">
 						</div>
 						<div class="row">
-							<div class="col-xs-4 form-group">
-								<label for="inputAddress">Postal Code</label>
+							<div id="divPostalCode" class="col-xs-4 form-group">
+								<label for="inputPostalCode">Postal Code</label>
 								<input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code">
 							</div>
-							<div class="col-xs-4 form-group">
-								<label for="inputAddress">City</label>
+							<div id="divCity" class="col-xs-4 form-group">
+								<label for="inputCity">City</label>
 								<input type="text" class="form-control" id="inputCity" placeholder="City">
 							</div>
-							<div class="col-xs-4 form-group">
+							<div id="divProvince" class="col-xs-4 form-group">
 								<label for="selectProvince">Province</label>
 								<select class="form-control" id="selectProvince" onchange="onChangeProvince()">
 							  		<option value="ON">Ontario</option>
@@ -41,11 +42,11 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div id="divTelephone" class="form-group">
 							<label for="inputTelephone">Telephone</label>
 							<input type="text" class="form-control" id="inputTelephone" placeholder="Telephone">
 						</div>
-						<div class="form-group">
+						<div id="divEmailAddress" class="form-group">
 							<label for="inputEmailAddress">Email Address</label>
 							<input type="text" class="form-control" id="inputEmailAddress" placeholder="Email Address">
 						</div>
@@ -108,7 +109,7 @@
 								<div class="row toppings">
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioCheese" value="cheese"> Cheese
+											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioCheese" value="cheese" checked> Cheese
 										</label>
 									</div>
 									<div class="col-xs-3">
