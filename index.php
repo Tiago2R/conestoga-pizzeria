@@ -1,3 +1,49 @@
+<?php
+	function saveOrder($arr) {
+
+	}
+
+	function validateOrderForm($arr) {
+		extract($arr);
+
+		if (!$name || 
+			!$address || 
+			!preg_match("/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i", $postalCode) ||
+			!$city || 
+			!$province || 
+			!preg_match("/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/", $telephone) ||
+			!preg_match("/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i", $emailAdress) ||
+			!$sizeOptions || 
+			!$crustTypeOptions || 
+			!$toppingsOptions) {
+
+			return FALSE;
+		}
+		else {
+			saveOrder($arr);
+
+			return TRUE;
+		}
+	}
+
+	if (isset($_POST['name']) &&
+		isset($_POST['address']) &&
+		isset($_POST['postalCode']) &&
+		isset($_POST['city']) &&
+		isset($_POST['province']) &&
+		isset($_POST['telephone']) &&
+		isset($_POST['emailAdress']) &&
+		isset($_POST['sizeOptions']) &&
+		isset($_POST['crustTypeOptions']) &&
+		isset($_POST['toppingsOptions'])) {
+		
+		$result = validateOrderForm($_POST);
+	}
+	else {
+		$result = FALSE;
+	}
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,30 +57,40 @@
 			<div class="text-center">
 				<img src="imgs/logo.png" alt="Conestoga Pizzeria logo">
 			</div>
-			<form id="orderForm" onsubmit="return validateForm()">
+			<?php
+				if (isset($result) && $result) {
+					if ($result) {
+						echo "<div class=\"text-center alert alert-success\" role=\"alert\"><strong>Order Placed!</strong></div>";
+					}
+					else {
+						echo "<div class=\"text-center alert alert-danger\" role=\"alert\"><strong>Incorrect Information!</strong></div>";
+					}		
+				}
+			?>
+			<form id="orderForm" action="<?PHP echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" onsubmit="return validateForm()" method="post">
 				<div class="row">
 					<div class="col-sm-6 form-block">
 						<h1>Personal Details</h1>
 						<div id="divName" class="form-group">
 							<label for="inputName">Name</label>
-							<input type="text" class="form-control" id="inputName" placeholder="Name">
+							<input type="text" class="form-control" id="inputName" name="name" placeholder="Name">
 						</div>
 						<div id="divAddress" class="form-group">
 							<label for="inputAddress">Address</label>
-							<input type="text" class="form-control" id="inputAddress" placeholder="Address">
+							<input type="text" class="form-control" id="inputAddress" name="address" placeholder="Address">
 						</div>
 						<div class="row">
 							<div id="divPostalCode" class="col-xs-4 form-group">
 								<label for="inputPostalCode">Postal Code</label>
-								<input type="text" class="form-control" id="inputPostalCode" placeholder="Postal Code">
+								<input type="text" class="form-control" id="inputPostalCode" name="postalCode" placeholder="Postal Code">
 							</div>
 							<div id="divCity" class="col-xs-4 form-group">
 								<label for="inputCity">City</label>
-								<input type="text" class="form-control" id="inputCity" placeholder="City">
+								<input type="text" class="form-control" id="inputCity" name="city" placeholder="City">
 							</div>
 							<div id="divProvince" class="col-xs-4 form-group">
 								<label for="selectProvince">Province</label>
-								<select class="form-control" id="selectProvince" onchange="onChangeProvince()">
+								<select class="form-control" id="selectProvince" name="province" onchange="onChangeProvince()">
 							  		<option value="ON">Ontario</option>
 							  		<option value="QC">Quebec</option>
 							  		<option value="MB">Manitoba</option>
@@ -44,11 +100,11 @@
 						</div>
 						<div id="divTelephone" class="form-group">
 							<label for="inputTelephone">Telephone</label>
-							<input type="text" class="form-control" id="inputTelephone" placeholder="Telephone">
+							<input type="text" class="form-control" id="inputTelephone" name="telephone" placeholder="Telephone">
 						</div>
 						<div id="divEmailAddress" class="form-group">
 							<label for="inputEmailAddress">Email Address</label>
-							<input type="text" class="form-control" id="inputEmailAddress" placeholder="Email Address">
+							<input type="text" class="form-control" id="inputEmailAddress" name="emailAdress" placeholder="Email Address">
 						</div>
 					</div>
 					<div class="col-sm-6 form-block">
@@ -109,66 +165,66 @@
 								<div class="row toppings">
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioCheese" value="cheese" checked> Cheese
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioCheese" value="cheese" checked> Cheese
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioSausage" value="sausage"> Sausage
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioSausage" value="sausage"> Sausage
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioBeef" value="beef"> Beef
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioBeef" value="beef"> Beef
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioHam" value="ham"> Ham
-										</label>
-									</div>
-								</div>
-								<div class="row toppings">
-									<div class="col-xs-3">
-										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioOnions" value="onions"> Onions
-										</label>
-									</div>
-									<div class="col-xs-3">
-										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioTomatoes" value="tomatoes"> Tomatoes
-										</label>
-									</div>
-									<div class="col-xs-3">
-										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioMushrooms" value="mushrooms"> Mushrooms
-										</label>
-									</div>
-									<div class="col-xs-3">
-										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioOlives" value="olives"> Olives
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioHam" value="ham"> Ham
 										</label>
 									</div>
 								</div>
 								<div class="row toppings">
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioSpinach" value="spinach"> Spinach
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioOnions" value="onions"> Onions
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioGarlic" value="garlic"> Garlic
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioTomatoes" value="tomatoes"> Tomatoes
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioBacon" value="bacon"> Bacon
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioMushrooms" value="mushrooms"> Mushrooms
 										</label>
 									</div>
 									<div class="col-xs-3">
 										<label class="checkbox-inline">
-											<input type="checkbox" name="toppingsOptions" onclick="onClickTopping()" id="radioPineapple" value="pineapple"> Pineapple
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioOlives" value="olives"> Olives
+										</label>
+									</div>
+								</div>
+								<div class="row toppings">
+									<div class="col-xs-3">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioSpinach" value="spinach"> Spinach
+										</label>
+									</div>
+									<div class="col-xs-3">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioGarlic" value="garlic"> Garlic
+										</label>
+									</div>
+									<div class="col-xs-3">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioBacon" value="bacon"> Bacon
+										</label>
+									</div>
+									<div class="col-xs-3">
+										<label class="checkbox-inline">
+											<input type="checkbox" name="toppingsOptions[]" onclick="onClickTopping()" id="radioPineapple" value="pineapple"> Pineapple
 										</label>
 									</div>
 								</div>

@@ -81,7 +81,7 @@ function isTelephoneValid() {
 
 function isEmailAddressValid() {
 	var inputEmailAddress = document.getElementById("inputEmailAddress").value;
-	var emailAddressPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;;
+	var emailAddressPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
 	if (inputEmailAddress == null || inputEmailAddress == "" || emailAddressPattern.test(inputEmailAddress) == false) {
 		addError("divEmailAddress");
