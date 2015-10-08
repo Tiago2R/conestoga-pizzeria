@@ -42,7 +42,7 @@ function onClickCrustType() {
 
 function onClickTopping() {
 	var form = document.getElementById("orderForm");
-	var toppingsOptions = form.elements["toppingsOptions"]
+	var toppingsOptions = form.elements["toppingsOptions[]"]
 	
 	var selectedToppingsAmount = 0;
 	for (var i = 0; i < toppingsOptions.length; i++) {
