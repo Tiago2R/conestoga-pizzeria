@@ -1,6 +1,27 @@
 <?php
 	function saveOrder($arr) {
+		$path = 'orders.txt';
+		$f = (file_exists($path))? fopen($path, "a+") : fopen($path, "w+");
 
+		extract($arr);
+		fwrite($f, "************************ORDER************************"."\n");
+		fwrite($f, "Name: ".$name."\n");
+		fwrite($f, "Address: ".$address."\n");
+		fwrite($f, "Postal Code: ".$postalCode."\n");
+		fwrite($f, "City: ".$city."\n");
+		fwrite($f, "Province: ".$province."\n");
+		fwrite($f, "Telephone: ".$telephone."\n");
+		fwrite($f, "Email Adress: ".$emailAdress."\n");
+		fwrite($f, "Size: ".$sizeOptions."\n");
+		fwrite($f, "Crust Type: ".$crustTypeOptions."\n");
+		fwrite($f, "Toppings: ");
+		foreach($toppingsOptions as $toppingsOption) {
+			fwrite($f, $toppingsOption." ");
+		}
+		fwrite($f, "\n");
+		fwrite($f, "*****************************************************"."\n");
+		
+		fclose($f);
 	}
 
 	function validateOrderForm($arr) {
@@ -20,7 +41,7 @@
 			return FALSE;
 		}
 		else {
-			saveOrder($arr);
+			saveOrder($_POST);
 
 			return TRUE;
 		}
